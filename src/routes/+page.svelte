@@ -1,33 +1,29 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { goto } from '$app/navigation';
 	import { TreadMillConnection, getTreadMillConnection } from '$lib/TreadMillConnection.svelte';
-	import { currentRunPlan } from '$lib/store.svelte';
-	import RunInfo from '$lib/RunInfo.svelte';
-	import TrackInfo from '$lib/TrackInfo.svelte';
+	import RunPlanDescription from '$lib/RunPlanDescription.svelte';
+	import { runPlans } from '$lib/store.svelte';
 	const connection: TreadMillConnection = getTreadMillConnection();
 
-	function connect() {
+	function gotoRunPlan(uuid: string) {
 		connection.connect();
+		goto(`${base}/run/${uuid}`);
 	}
-
-	$effect(() => {
-		if (!connection.connected || connection.currentData.speed <= 0) return;
-		const time = connection.currentData.elapsedTime;
-		const speed = currentRunPlan.getCurrentSpeed(time);
-		console.log(speed, connection.currentData.speed);
-		if (connection.currentData.speed !== speed) {
-			if (speed > 0) {
-				connection.setSpeed(speed);
-			} else {
-				connection.pause();
-			}
-		}
-	});
 </script>
 
-{#if !connection.connected}
-	<a href="{base}/about">asd</a>
-	<button onclick={connect}> ASD</button>
-{/if}
-<RunInfo />
-<TrackInfo />
+<div class="verticalListWithGap">
+	{#each runPlans as plan}
+		<button onclick={() => gotoRunPlan(plan.uuid)}>
+			<RunPlanDescription runPlan={plan} />
+		</button>
+	{/each}
+</div>
+
+<style>
+	.verticalListWithGap {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+</style>

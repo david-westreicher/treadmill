@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { TreadMillConnection, getTreadMillConnection } from '$lib/TreadMillConnection.svelte';
-	import { currentRunPlan } from '$lib/store.svelte';
+	let { elapsedTime = 0, runPlan } = $props();
 
-	const connection: TreadMillConnection = getTreadMillConnection();
 	const splits = $derived(
-		currentRunPlan.segments.map((seg) => ({
+		runPlan.segments.map((seg) => ({
 			label: seg.speed > 5 ? 'Run' : 'Walk',
 			duration: seg.duration,
 			speed: seg.speed,
@@ -80,21 +78,22 @@
 			currentX += splitWidth;
 		});
 
-		const progress = Math.min(connection.currentData.elapsedTime / (totalDuration * 60), 1);
-		const progressX = paddingLeft + graphWidth * progress;
-
-		ctx.strokeStyle = '#22C55E';
-		ctx.lineWidth = 2;
-		ctx.beginPath();
-		ctx.moveTo(progressX, paddingTop);
-		ctx.lineTo(progressX, paddingTop + graphHeight);
-		ctx.stroke();
+		if (elapsedTime > 0) {
+			const progress = Math.min(elapsedTime / (totalDuration * 60), 1);
+			const progressX = paddingLeft + graphWidth * progress;
+			ctx.strokeStyle = '#22C55E';
+			ctx.lineWidth = 2;
+			ctx.beginPath();
+			ctx.moveTo(progressX, paddingTop);
+			ctx.lineTo(progressX, paddingTop + graphHeight);
+			ctx.stroke();
+		}
 
 		ctx.fillStyle = 'white';
 		ctx.font = '10px sans-serif';
 		ctx.textAlign = 'center';
 		ctx.fillText('0 min', paddingLeft, height - 6);
-		ctx.fillText(`${totalDuration} min`, width - paddingRight, height - 6);
+		ctx.fillText(`${Math.ceil(totalDuration)} min`, width - paddingRight, height - 6);
 	}
 
 	setInterval(() => {
@@ -102,19 +101,4 @@
 	}, 1000);
 </script>
 
-<div class="container">
-	<canvas bind:this={canvas}></canvas>
-</div>
-
-<style>
-	.container {
-		aspect-ratio: 3 / 1;
-		width: 97vw;
-		display: block;
-		padding-left: 1rem;
-		padding-right: 1rem;
-		box-sizing: border-box;
-		background: var(--bg-2);
-		border-radius: var(--border-radius);
-	}
-</style>
+<canvas bind:this={canvas}></canvas>

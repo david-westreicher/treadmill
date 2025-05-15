@@ -2,14 +2,14 @@
 	import Icon from '@iconify/svelte';
 	import Card from './Card.svelte';
 	import { TreadMillConnection, getTreadMillConnection } from '$lib/TreadMillConnection.svelte';
-	import { currentRunPlan } from '$lib/store.svelte';
+	let { runPlan } = $props();
 
 	const connection: TreadMillConnection = getTreadMillConnection();
 	const data = connection.currentData;
 
 	let pace = $derived(data.distance <= 0 ? 0 : data.elapsedTime / (data.distance / 1000));
-	const totalDistance = currentRunPlan.totalDistance;
-	const totalTime = currentRunPlan.totalTime;
+	const totalDistance = runPlan.totalDistance;
+	const totalTime = runPlan.totalTime;
 
 	function formatTime(seconds: number): string {
 		const minutes = Math.floor(seconds / 60);

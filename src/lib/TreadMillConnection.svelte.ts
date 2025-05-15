@@ -15,7 +15,7 @@ export class TreadMillConnection{
     connected = $state(false);
 
     connect(){
-		navigator.bluetooth
+		return navigator.bluetooth
 			.requestDevice({ filters: [{ services: [SERVICE_UUID] }] })
 			.then((device) => {
 				console.log('Connecting to GATT Server...');

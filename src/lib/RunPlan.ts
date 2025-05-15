@@ -4,10 +4,7 @@ export class Segment {
 }
 
 export class RunPlan{
-    segments: Segment[];
-
-    constructor(semgents: Segment[]) {
-        this.segments = semgents;
+    constructor(readonly name: string, readonly uuid: string, readonly segments: Segment[]) {
     }
 
     getCurrentSpeed(runTime: number) {
