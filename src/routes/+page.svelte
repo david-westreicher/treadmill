@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { TreadMillConnection, getTreadMillConnection } from '$lib/TreadMillConnection.svelte';
 	import { currentRunPlan } from '$lib/store.svelte';
 	import RunInfo from '$lib/RunInfo.svelte';
@@ -25,7 +26,7 @@
 </script>
 
 {#if !connection.connected}
-	<a href="/about">asd</a>
+	<a href="{base}/about">asd</a>
 	<button onclick={connect}> ASD</button>
 {/if}
 <RunInfo />
