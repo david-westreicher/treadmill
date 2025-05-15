@@ -25,6 +25,7 @@
 </script>
 
 {#if !connection.connected}
+	<a href="/about">asd</a>
 	<button onclick={connect}> ASD</button>
 {/if}
 <RunInfo />
