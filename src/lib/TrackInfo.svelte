@@ -30,13 +30,13 @@
 		resizeCanvas();
 	});
 
-	const totalDuration = splits.reduce((acc, split) => acc + split.duration, 0);
-	const maxSpeed = Math.max(...splits.map((s) => s.speed));
 	const padding = 40;
 	const paddingBottom = 30;
 
 	function draw() {
 		if (!canvas) return;
+		const totalDuration = splits.reduce((acc, split) => acc + split.duration, 0);
+		const maxSpeed = Math.max(...splits.map((s) => s.speed));
 		const width = canvas.width;
 		const height = canvas.height;
 		const paddingLeft = padding;

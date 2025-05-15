@@ -5,7 +5,7 @@
 	import TrackInfo from '$lib/TrackInfo.svelte';
 	const connection: TreadMillConnection = getTreadMillConnection();
 
-	function handlePen() {
+	function connect() {
 		connection.connect();
 	}
 
@@ -25,7 +25,7 @@
 </script>
 
 {#if !connection.connected}
-	<button on:click={handlePen}> ASD</button>
+	<button onclick={connect}> ASD</button>
 {/if}
 <RunInfo />
 <TrackInfo />
