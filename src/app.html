@@ -4,9 +4,16 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="dark light">
+        <link rel="stylesheet" href="%sveltekit.assets%/shared.css" />
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
+        <script >
+            let setted_once = false
+            document.documentElement.classList.remove('light', 'dark');
+            document.documentElement.classList.add('dark' || 'light');
+        </script>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
