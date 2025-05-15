@@ -3,7 +3,7 @@ import { RunPlan, Segment} from '$lib/RunPlan';
 const WALK = 2
 const RUN = 7
 
-export let runPlans = [
+export const runPlans = [
     new RunPlan(
         "Couch to 5k - day 1",
         "023ui123-1234-1234-1234-123456789012",
