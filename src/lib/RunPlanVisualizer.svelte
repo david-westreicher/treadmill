@@ -14,6 +14,7 @@
 	let canvas: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D;
 	function resizeCanvas() {
+		if (!canvas) return;
 		canvas.width = window.innerWidth - 64;
 		canvas.height = canvas.width / 3;
 		draw();
