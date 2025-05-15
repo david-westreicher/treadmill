@@ -32,6 +32,16 @@
 	}
 
 	function handleFullscreen() {
+		if ('wakeLock' in navigator) {
+			navigator.wakeLock
+				.request('screen')
+				.then(() => {
+					console.log('Screen wake lock active');
+				})
+				.catch((err) => {
+					console.error(`Failed to acquire wake lock: ${err.name}, ${err.message}`);
+				});
+		}
 		if (document.fullscreenElement) {
 			document.exitFullscreen();
 		} else {
